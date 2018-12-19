@@ -1,0 +1,209 @@
+<html>
+<head>
+	<title>ASCII Art Generator</title>
+	<meta charset="UTF-8">
+
+<style>
+</style>
+</head>
+<body style="background-color:MediumPurple;">
+
+<h1 style="color:yellow">ASCII Art Generator</h1>
+
+<input type = "file" accept="image/*" id="image"> <br /> <br />
+<button id="ascii" onclick="ASCII_Art()">Transform!</button>
+<br />
+<canvas id="canvas"></canvas>
+<br />
+<p style="font-family:courier;transform:scaley(.45)" id="output"></p>
+
+<script>
+//var display = "";
+var output = document.getElementById("output");
+
+function ASCII_Art()
+{
+	var image;
+	var input = document.getElementById('image');
+	var file = input.files[0];
+	var reader = new FileReader();
+	reader.onload = function createImage() {
+		image = new Image();
+		image.onload = generate;
+		image.src = reader.result;
+		}
+	reader.readAsDataURL(file);
+	
+	function generate() {
+		var canvas = document.getElementById("canvas")
+		canvas.width = image.width;
+		canvas.height = image.height;
+		var ctx = canvas.getContext("2d");
+		ctx.drawImage(image,0,0);
+		var display = "";
+		for (y = 0; y < canvas.height; y++)
+		{
+			for (x = 0; x < canvas.width; x++)
+			{	// nested loop iterates through each pixel
+				var pixelData = ctx.getImageData(x, y, 1, 1).data;
+				// if the pixel is transparent, add a space and proceed
+				if (pixelData[3] < 8)
+				{
+					display += "&nbsp";
+				}
+				// otherwise, calculate the grayscale value and add it to the display
+				else
+				{
+					var average = (pixelData[0] + pixelData[1] + pixelData[2]) / 3; // to grayscale
+					display += Determine_Character(average);
+				}
+			}
+			display += "<br />"; // add a newline after y loop
+		}
+		output.innerHTML = display;
+	}
+	
+}
+
+function Determine_Character(ch)
+{
+	// determines what character and color to display
+	// changes every 8 values
+	// characters: A-Z, 0-5
+	if (ch < 8)
+	{
+		return "<span style='color:#000000'>A</span>";
+	}
+	else if (ch < 16)
+	{
+		return "<span style='color:#080808'>B</span>";
+	}
+	else if (ch < 24)
+	{
+		return "<span style='color:#101010'>C</span>";
+	}
+	else if (ch < 32)
+	{
+		return "<span style='color:#181818'>D</span>";
+	}
+	else if (ch < 40)
+	{
+		return "<span style='color:#202020'>E</span>";
+	}
+	else if (ch < 48)
+	{
+		return "<span style='color:#282828'>F</span>";
+	}
+	else if (ch < 56)
+	{
+		return "<span style='color:#303030'>G</span>";
+	}
+	else if (ch < 64)
+	{
+		return "<span style='color:#383838'>H</span>";
+	}
+	else if (ch < 72)
+	{
+		return "<span style='color:#404040'>I</span>";
+	}
+	else if (ch < 80)
+	{
+		return "<span style='color:#484848'>J</span>";
+	}
+	else if (ch < 88)
+	{
+		return "<span style='color:#505050'>K</span>";
+	}
+	else if (ch < 96)
+	{
+		return "<span style='color:#585858'>L</span>";
+	}
+	else if (ch < 104)
+	{
+		return "<span style='color:#606060'>M</span>";
+	}
+	else if (ch < 112)
+	{
+		return "<span style='color:#686868'>N</span>";
+	}
+	else if (ch < 120)
+	{
+		return "<span style='color:#707070'>O</span>";
+	}
+	else if (ch < 128)
+	{
+		return "<span style='color:#787878'>P</span>";
+	}
+	else if (ch < 136)
+	{
+		return "<span style='color:#888888'>Q</span>";
+	}
+	else if (ch < 144)
+	{
+		return "<span style='color:#909090'>R</span>";
+	}
+	else if (ch < 152)
+	{
+		return "<span style='color:#989898'>S</span>";
+	}
+	else if (ch < 160)
+	{
+		return "<span style='color:#989898'>T</span>";
+	}
+	else if (ch < 168)
+	{
+		return "<span style='color:#A0A0A0'>U</span>";
+	}
+	else if (ch < 176)
+	{
+		return "<span style='color:#A8A8A8'>V</span>";
+	}
+	else if (ch < 184)
+	{
+		return "<span style='color:#B0B0B0'>W</span>";
+	}
+	else if (ch < 192)
+	{
+		return "<span style='color:#B8B8B8'>X</span>";
+	}
+	else if (ch < 200)
+	{
+		return "<span style='color:#C0C0C0'>Y</span>";
+	}
+	else if (ch < 208)
+	{
+		return "<span style='color:#C8C8C8'>Z</span>";
+	}
+	else if (ch < 216)
+	{
+		return "<span style='color:#D0D0D0'>0</span>";
+	}
+	else if (ch < 224)
+	{
+		return "<span style='color:#D8D8D8'>1</span>";
+	}
+	else if (ch < 232)
+	{
+		return "<span style='color:#E0E0E0'>2</span>";
+	}
+	else if (ch < 240)
+	{
+		return "<span style='color:#E8E8E8'>3</span>";
+	}
+	else if (ch < 248)
+	{
+		return "<span style='color:#F0F0F0'>4</span>";
+	}
+	else if (ch < 256)
+	{
+		return "<span style='color:#FFFFFF'>5</span>";
+	}
+	else
+	{
+		return " ";
+	}
+}
+</script>
+
+</body>
+</html>
